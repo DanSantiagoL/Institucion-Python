@@ -1,0 +1,60 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+form {
+    display: inline;
+}
+
+.navbar {
+    background-color: #f8f8f8; /* Color de fondo del recuadro */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde del recuadro */
+    border-radius: 5px; /* Bordes redondeados */
+    
+}
+
+.navbar ul {
+    list-style-type: none; /* Quitar los puntos de la lista */
+    margin: 0; /* Eliminar el margen */
+    padding: 0; /* Eliminar el padding */
+    display: flex; /* Hacer la lista horizontal */
+    justify-content: center;
+    
+}
+
+.navbar li {
+    margin-right: 20px; /* Espacio entre los elementos de la lista */
+    
+
+}
+
+.navbar a {
+    text-decoration: none; /* Sin subrayado */
+    color: #333; /* Color del texto */
+    padding: 5px 10px; /* Espaciado alrededor del texto */
+    transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+.navbar a:hover {
+    background-color: #ddd; /* Color de fondo al pasar el ratón */
+    border-radius: 3px; /* Bordes redondeados en hover */
+}

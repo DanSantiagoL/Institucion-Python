@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+<body>
+
+    <h1>Usuarios</h1>
+
+    <div class="navbar">
+        <ul>
+            
+            <li><a href="index">Tabla usuario</a></li>
+            <li><a href="materias">Tabla materias</a></li>
+            <li><a href="pagina3.html">Página 3</a></li>
+            <li><a href="pagina4.html">Página 4</a></li>
+        </ul>
+    </div>
+
+    <!-- Botón para cerrar sesión -->
+    <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
+        <button type="submit">Cerrar sesión</button>
+    </form>
+
+    <!-- Tabla de Usuarios -->
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Correo</th>
+            <th>Contraseña</th>
+            <th>Apellido</th>
+            <th>Nombre</th>
+            <th>Tipo de Documento</th>
+            <th>Documento</th>
+            <th>Telefono</th>
+            <th>Estado</th>
+            <th>Rol</th>
+            <th>Actualizar/Eliminar</th>
+        </tr>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario[0] }}</td>
+            <td>{{ usuario[1] }}</td>
+            <td>{{ usuario[2] }}</td>
+            <td>{{ usuario[3] }}</td>
+            <td>{{ usuario[4] }}</td>
+            <td>{{ usuario[5] }}</td>
+            <td>{{ usuario[6] }}</td>
+            <td>{{ usuario[7] }}</td>
+            <td>{{ usuario[8] }}</td>
+            <td>{{ usuario[9] }}</td>
+            <td>
+                <form action="/actualizar/{{ usuario[0] }}" method="post">
+                    <input type="text" name="correo" value="{{ usuario[1] }}">
+                    <input type="text" name="contrasena" value="{{ usuario[2] }}">
+                    <input type="text" name="apellido" value="{{ usuario[3] }}">
+                    <input type="text" name="nombre" value="{{ usuario[4] }}">
+                    <input type="text" name="tipoDocumento" value="{{ usuario[5] }}">
+                    <input type="text" name="documento" value="{{ usuario[6] }}">
+                    <input type="text" name="telefono" value="{{ usuario[7] }}">
+                    <input type="text" name="estado" value="{{ usuario[8] }}">
+                    <input type="text" name="rol" value="{{ usuario[9] }}">
+                    <button type="submit">Actualizar</button>
+                </form>
+                <a href="/eliminar/{{ usuario[0]}}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Formulario para agregar nuevo usuario -->
+    <h2>Agregar Usuario</h2>
+    <form action="/agregar" method="post">
+        <input type="text" name="correo" placeholder="Correo">
+        <input type="text" name="contrasena" placeholder="Contraseña">
+        <input type="text" name="apellido" placeholder="Apellido">
+        <input type="text" name="nombre" placeholder="Nombre">
+        <input type="text" name="tipoDocumento" placeholder="Tipo de documento">
+        <input type="number" name="documento" placeholder="Documento">
+        <input type="number" name="telefono" placeholder="Telefono">
+        <input type="text" name="estado" placeholder="Estado">
+        <input type="text" name="rol" placeholder="Rol">
+        <button type="submit">Agregar</button>
+    </form>
+</body>
+</html>
