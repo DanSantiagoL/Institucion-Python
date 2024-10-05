@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Profesores</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
+
+</head>
+<body>
+
+    <h1>Profesores</h1>
+
+    <div class="navbar">
+        <ul>
+            
+            <li><a href="index">Tabla usuario</a></li>
+            <li><a href="materias">Tabla materias</a></li>
+            <li><a href="cursos">Tabla cursos</a></li>
+            <li><a href="profesores">Tabla de profesores</a></li>
+        </ul>
+    </div>
+
+    <!-- Tabla de profesores -->
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Documento</th>
+            <th>Estudios</th>
+            <th>Actualizar/Eliminar</th>
+        </tr>
+        {% for profesor in profesores %}
+        <tr>
+            <td>{{ profesor[0] }}</td>
+            <td>{{ profesor[1] }}</td>
+            <td>{{ profesor[2] }}</td>
+            <td>
+                <form action="/actualizar_profesor/{{ profesor[0] }}" method="post">
+                    <input type="text" name="documento" value="{{ profesor[1] }}">
+                    <input type="text" name="estudios" value="{{ profesor[2] }}">
+                    <button type="submit">Actualizar</button>
+                </form>
+                <a href="/eliminar_profesor/{{profesor[0]}}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Formulario para agregar nuevo profesor -->
+    <h2>Agregar Profesor</h2>
+    <form action="/agregar_profesor" method="post">
+        <input type="text" name="documento" placeholder="Documento">
+        <input type="text" name="estudios" placeholder="Estudios/formación">
+        <button type="submit">Agregar</button>
+    </form>
+</body>
+</html>

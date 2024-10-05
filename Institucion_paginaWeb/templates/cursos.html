@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Cursos</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
+
+</head>
+<body>
+
+    <h1>Cursos</h1>
+
+    <div class="navbar">
+        <ul>
+            
+            <li><a href="index">Tabla usuario</a></li>
+            <li><a href="materias">Tabla materias</a></li>
+            <li><a href="cursos">Tabla cursos</a></li>
+            <li><a href="profesores">Tabla de profesores</a></li>
+        </ul>
+    </div>
+
+    <!-- Tabla de cursos -->
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Curso</th>
+            <th>Estado</th>
+            <th>Profesor</th>
+            <th>Estudiante</th>
+            <th>Actualizar/Eliminar</th>
+        </tr>
+        {% for curso in cursos %}
+        <tr>
+            <td>{{ curso[0] }}</td>
+            <td>{{ curso[1] }}</td>
+            <td>{{ curso[2] }}</td>
+            <td>{{ curso[3] }}</td>
+            <td>{{ curso[4] }}</td>
+            <td>
+                <form action="/actualizar_curso/{{ curso[0] }}" method="post">
+                    <input type="text" name="descripcion" value="{{ curso[1] }}">
+                    <input type="text" name="estado" value="{{ curso[2] }}">
+                    <input type="text" name="profesor" value="{{ curso[3] }}">
+                    <input type="text" name="estudiante" value="{{ curso[4] }}">
+                    <button type="submit">Actualizar</button>
+                </form>
+                <a href="/eliminar_curso/{{ curso[0]}}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Formulario para agregar nuevo curso -->
+    <h2>Agregar Curso</h2>
+    <form action="/agregar_curso" method="post">
+        <input type="text" name="descripcion" placeholder="Curso">
+        <input type="text" name="estado" placeholder="Estado">
+        <input type="text" name="profesor" placeholder="Profesor">
+        <input type="text" name="estudiante" placeholder="Estudiante">
+        <button type="submit">Agregar</button>
+    </form>
+</body>
+</html>
