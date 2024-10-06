@@ -19,6 +19,8 @@
             <li><a href="materias">Tabla materias</a></li>
             <li><a href="cursos">Tabla cursos</a></li>
             <li><a href="profesores">Tabla de profesores</a></li>
+            <li><a href="estudiantes">Tabla de estudiantes</a></li>
+            <li><a href="administrativos">Tabla de administrativos</a></li>
         </ul>
     </div>
 
@@ -39,9 +41,13 @@
             <td>{{ materia[3] }}</td>
             <td>
                 <form action="/actualizar_materia/{{ materia[0] }}" method="post">
-                    <input type="text" name="descripcion" value="{{ materia[1] }}">
-                    <input type="text" name="profesor" value="{{ materia[2] }}">
-                    <input type="text" name="estado" value="{{ materia[3] }}">
+                    <input type="text" name="descripcion" value="{{ materia[1] }}" required>
+                    <input type="text" name="profesor" value="{{ materia[2] }}" required>
+                    <select name="estado" value="{{ materia[3] }}" required>
+                        <option value="{{ materia[3] }}">{{ materia[3] }}</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                      </select>
                     <button type="submit">Actualizar</button>
                 </form>
                 <a href="/eliminar_materia/{{ materia[0]}}">Eliminar</a>
@@ -53,9 +59,13 @@
     <!-- Formulario para agregar nueva materia -->
     <h2>Agregar Materia</h2>
     <form action="/agregar_materia" method="post">
-        <input type="text" name="descripcion" placeholder="Materia">
-        <input type="text" name="profesor" placeholder="Profesor">
-        <input type="text" name="estado" placeholder="Estado">
+        <input type="text" name="descripcion" placeholder="Materia" required>
+        <input type="text" name="profesor" placeholder="Profesor" required>
+        <select name="estado" required>
+            <option value="">Seleccione un estado:</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+          </select>
         <button type="submit">Agregar</button>
     </form>
 </body>

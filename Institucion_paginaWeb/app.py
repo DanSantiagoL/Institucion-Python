@@ -3,6 +3,8 @@ from modelo import UsuarioModel
 from modelo import MateriaModel
 from modelo import CursoModel
 from modelo import ProfesorModel
+from modelo import EstudianteModel
+from modelo import AdministrativoModel
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Necesario para gestionar sesiones
@@ -80,6 +82,7 @@ def eliminar_materia(idmateria):
     MateriaModel.eliminar_materia(idmateria)  # Elimina la materia en la BD
     return redirect(url_for('materias'))  # Redirige a la página principal
 
+
 # Ruta para la página principal donde se muestran todos los cursos
 @app.route('/cursos')
 def cursos():
@@ -93,8 +96,7 @@ def agregar_curso():
     descripcion = request.form['descripcion']   
     estado = request.form['estado']
     profesor = request.form['profesor']
-    estudiante = request.form['estudiante']
-    CursoModel.crear_curso(descripcion,estado, profesor,estudiante)  # Inserta el nuevo curso en la BD
+    CursoModel.crear_curso(descripcion,estado, profesor)  # Inserta el nuevo curso en la BD
     return redirect(url_for('cursos'))  # Redirige a la página principal
 
 # Ruta para actualizar un curso
@@ -103,8 +105,7 @@ def actualizar_curso(idcurso):
     descripcion = request.form['descripcion']
     estado = request.form['estado']
     profesor = request.form['profesor']
-    estudiante = request.form['estudiante']
-    CursoModel.actualizar_curso(idcurso, descripcion, estado, profesor, estudiante)  # Actualiza el curso en la BD
+    CursoModel.actualizar_curso(idcurso, descripcion, estado, profesor)  # Actualiza el curso en la BD
     return redirect(url_for('cursos'))  # Redirige a la página principal
 
 # Ruta para eliminar un curso
@@ -121,27 +122,42 @@ def profesores():
     profesores = ProfesorModel.obtener_profesor()  # Obtiene los profesores desde el modelo
     return render_template('profesores.html', profesores=profesores)  # Renderiza la plantilla con los profesores
 
-# Ruta para agregar un nuevo profesor
-@app.route('/agregar_profesor', methods=['POST'])
-def agregar_profesor():
-    documento = request.form['documento']   
-    estudios = request.form['estudios']
-    ProfesorModel.crear_profesor(documento,estudios)  # Inserta el nuevo profesor en la BD
-    return redirect(url_for('profesores'))  # Redirige a la página principal
-
 # Ruta para actualizar un profesor
 @app.route('/actualizar_profesor/<int:idprofesor>', methods=['POST'])
 def actualizar_profesor(idprofesor):
-    documento = request.form['documento']
     estudios = request.form['estudios']
-    ProfesorModel.actualizar_profesor(idprofesor, documento, estudios)  # Actualiza el profesor en la BD
+    ProfesorModel.actualizar_profesor(idprofesor, estudios)  # Actualiza el profesor en la BD
     return redirect(url_for('profesores'))  # Redirige a la página principal
 
-# Ruta para eliminar un profesor
-@app.route('/eliminar_profesor/<int:idprofesor>')
-def eliminar_profesor(idprofesor):
-    ProfesorModel.eliminar_profesor(idprofesor)  # Elimina el profesor en la BD
-    return redirect(url_for('profesores'))  # Redirige a la página principal
+
+# Ruta para la página principal donde se muestran todos los estudiantes
+@app.route('/estudiantes')
+def estudiantes():
+    
+    estudiantes = EstudianteModel.obtener_estudiante()  # Obtiene los estudiantes desde el modelo
+    return render_template('estudiantes.html', estudiantes=estudiantes)  # Renderiza la plantilla con los estudiantes
+
+# Ruta para actualizar un estudiante
+@app.route('/actualizar_estudiante/<int:idestudiante>', methods=['POST'])
+def actualizar_estudiante(idestudiante):
+    curso = request.form['curso']
+    EstudianteModel.actualizar_estudiante(idestudiante, curso)  # Actualiza el curso en la BD
+    return redirect(url_for('estudiantes'))  # Redirige a la página principal
+
+
+# Ruta para la página principal donde se muestran todos los administrativos
+@app.route('/administrativos')
+def administrativos():
+    
+    administrativos = AdministrativoModel.obtener_administrativo()  # Obtiene los administrativos desde el modelo
+    return render_template('administrativos.html', administrativos=administrativos)  # Renderiza la plantilla con los administrativos
+
+# Ruta para actualizar un administrativo
+@app.route('/actualizar_administrativo/<int:idadministrativo>', methods=['POST'])
+def actualizar_administrativo(idadministrativo):
+    cargo = request.form['cargo']
+    AdministrativoModel.actualizar_administrativo(idadministrativo, cargo)  # Actualiza el administrativo en la BD
+    return redirect(url_for('administrativos'))  # Redirige a la página principal
 
 if __name__ == '__main__':
     app.run(debug=True)  # Ejecuta la aplicación Flask con modo de depuración

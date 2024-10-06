@@ -19,6 +19,8 @@
             <li><a href="materias">Tabla materias</a></li>
             <li><a href="cursos">Tabla cursos</a></li>
             <li><a href="profesores">Tabla de profesores</a></li>
+            <li><a href="estudiantes">Tabla de estudiantes</a></li>
+            <li><a href="administrativos">Tabla de administrativos</a></li>
         </ul>
     </div>
 
@@ -47,14 +49,28 @@
             <td>{{ usuario[7] }}</td>
             <td>
                 <form action="/actualizar/{{ usuario[0] }}" method="post">
-                    <input type="text" name="documento" value="{{ usuario[0] }}">
-                    <input type="text" name="correo" value="{{ usuario[1] }}">
-                    <input type="text" name="apellido" value="{{ usuario[2] }}">
-                    <input type="text" name="nombre" value="{{ usuario[3] }}">
-                    <input type="text" name="tipoDocumento" value="{{ usuario[4] }}">
-                    <input type="text" name="telefono" value="{{ usuario[5] }}">
-                    <input type="text" name="estado" value="{{ usuario[6] }}">
-                    <input type="text" name="rol" value="{{ usuario[7] }}">
+                    <input type="text" name="documento" value="{{ usuario[0] }}" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
+                    <input type="email" name="correo" value="{{ usuario[1] }}" required>
+                    <input type="text" name="apellido" value="{{ usuario[2] }}" required>
+                    <input type="text" name="nombre" value="{{ usuario[3] }}" required>
+                    <select name="tipoDocumento" value="{{ usuario[4] }}" required>
+                        <option value="{{ usuario[4] }}">{{ usuario[4] }}</option>
+                        <option value="CC">CC</option>
+                        <option value="CE">CE</option>
+                        <option value="TI">TI</option>
+                      </select>
+                    <input type="text" name="telefono" value="{{ usuario[5] }}" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
+                    <select name="estado" value="{{ usuario[6]}}" required>
+                        <option value="{{ usuario[6] }}">{{ usuario[6] }}</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                      </select>
+                    <select name="rol" value="{{ usuario[7] }}" required>
+                        <option value="">Seleccione un rol: </option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Profesor</option>
+                        <option value="3">Estudiante</option>
+                      </select>
                     <button type="submit">Actualizar</button>
                 </form>
                 <a href="/eliminar/{{ usuario[0]}}">Eliminar</a>
@@ -66,14 +82,29 @@
     <!-- Formulario para agregar nuevo usuario -->
     <h2>Agregar Usuario</h2>
     <form action="/agregar" method="post">
-        <input type="number" name="documento" placeholder="Documento">
-        <input type="text" name="correo" placeholder="Correo">
-        <input type="text" name="apellido" placeholder="Apellido">
-        <input type="text" name="nombre" placeholder="Nombre">
-        <input type="text" name="tipoDocumento" placeholder="Tipo de documento">
-        <input type="number" name="telefono" placeholder="Telefono">
-        <input type="text" name="estado" placeholder="Estado">
-        <input type="text" name="rol" placeholder="Rol">
+        <input type="text" name="documento" placeholder="Documento" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
+        <input type="email" name="correo" placeholder="Correo" required>
+        <input type="text" name="apellido" placeholder="Apellido" required>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <select name="tipoDocumento" required >
+            <option value="">Tipo de documento:</option>
+            <option value="CC">CC</option>
+            <option value="CE">CE</option>
+            <option value="TI">TI</option>
+          </select>
+        <input type="text" name="telefono" placeholder="Telefono" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
+        <select name="estado" required >
+            <option value="">Seleccione un estado:</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+          </select>
+
+          <select name="rol" required >
+            <option value="">Seleccione un rol:</option>
+            <option value="1">Administrador</option>
+            <option value="2">Profesor</option>
+            <option value="3">Estudiante</option>
+          </select>
         <button type="submit">Agregar</button>
     </form>
 </body>

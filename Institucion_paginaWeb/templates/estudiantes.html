@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Profesores</title>
+    <title>Gestión de estudiantes</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
 
 </head>
 <body>
 
-    <h1>Profesores</h1>
+    <h1>Estudiantes</h1>
 
     <div class="navbar">
         <ul>
@@ -24,29 +24,28 @@
         </ul>
     </div>
 
-    <!-- Tabla de profesores -->
+    <!-- Tabla de estudiantes -->
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Profesor</th>
-            <th>Estudios</th>
-            <th>Actualizar estudios</th>
+            <th>Documento</th>
+            <th>Curso</th>
+            <th>Actualizar curso</th>
         </tr>
-        {% for profesor in profesores %}
+        {% for estudiante in estudiantes %}
         <tr>
-            <td>{{ profesor[0] }}</td>
-            <td>{{ profesor[1] }}</td>
-            <td>{{ profesor[2] }}</td>
+            <td>{{ estudiante[0] }}</td>
+            <td>{{ estudiante[1] }}</td>
+            <td>{{ estudiante[2] }}</td>
             <td>
-                <form action="/actualizar_profesor/{{ profesor[0] }}" method="post">
-                    <input type="text" name="estudios" value="{{ profesor[2] }}" required>
+                <form action="/actualizar_estudiante/{{ estudiante[0] }}" method="post">
+                    <input type="text" name="curso" value="{{ estudiante[2] }}" required>
                     <button type="submit">Actualizar</button>
                 </form>
             </td>
         </tr>
         {% endfor %}
     </table>
-
 
 </body>
 </html>

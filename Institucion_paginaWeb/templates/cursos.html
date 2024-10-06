@@ -19,6 +19,8 @@
             <li><a href="materias">Tabla materias</a></li>
             <li><a href="cursos">Tabla cursos</a></li>
             <li><a href="profesores">Tabla de profesores</a></li>
+            <li><a href="estudiantes">Tabla de estudiantes</a></li>
+            <li><a href="administrativos">Tabla de administrativos</a></li>
         </ul>
     </div>
 
@@ -29,7 +31,6 @@
             <th>Curso</th>
             <th>Estado</th>
             <th>Profesor</th>
-            <th>Estudiante</th>
             <th>Actualizar/Eliminar</th>
         </tr>
         {% for curso in cursos %}
@@ -38,13 +39,15 @@
             <td>{{ curso[1] }}</td>
             <td>{{ curso[2] }}</td>
             <td>{{ curso[3] }}</td>
-            <td>{{ curso[4] }}</td>
             <td>
                 <form action="/actualizar_curso/{{ curso[0] }}" method="post">
-                    <input type="text" name="descripcion" value="{{ curso[1] }}">
-                    <input type="text" name="estado" value="{{ curso[2] }}">
-                    <input type="text" name="profesor" value="{{ curso[3] }}">
-                    <input type="text" name="estudiante" value="{{ curso[4] }}">
+                    <input type="text" name="descripcion" value="{{ curso[1] }}" required>
+                    <select name="estado" value="{{ curso[2] }}" required>
+                        <option value="{{ curso[2] }}">{{ curso[2] }}</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                      </select>
+                    <input type="text" name="profesor" value="{{ curso[3] }}" required>
                     <button type="submit">Actualizar</button>
                 </form>
                 <a href="/eliminar_curso/{{ curso[0]}}">Eliminar</a>
@@ -56,10 +59,13 @@
     <!-- Formulario para agregar nuevo curso -->
     <h2>Agregar Curso</h2>
     <form action="/agregar_curso" method="post">
-        <input type="text" name="descripcion" placeholder="Curso">
-        <input type="text" name="estado" placeholder="Estado">
-        <input type="text" name="profesor" placeholder="Profesor">
-        <input type="text" name="estudiante" placeholder="Estudiante">
+        <input type="text" name="descripcion" placeholder="Curso" required>
+        <select name="estado" required>
+            <option value="">Seleccione un estado:</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+          </select>
+        <input type="text" name="profesor" placeholder="Profesor" required>
         <button type="submit">Agregar</button>
     </form>
 </body>

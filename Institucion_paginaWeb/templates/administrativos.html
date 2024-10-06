@@ -24,22 +24,22 @@
         </ul>
     </div>
 
-    <!-- Tabla de profesores -->
+    <!-- Tabla de administrativos -->
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Profesor</th>
-            <th>Estudios</th>
-            <th>Actualizar estudios</th>
+            <th>Documento</th>
+            <th>Cargo</th>
+            <th>Actualizar cargo</th>
         </tr>
-        {% for profesor in profesores %}
+        {% for administrativo in administrativos %}
         <tr>
-            <td>{{ profesor[0] }}</td>
-            <td>{{ profesor[1] }}</td>
-            <td>{{ profesor[2] }}</td>
+            <td>{{ administrativo[0] }}</td>
+            <td>{{ administrativo[1] }}</td>
+            <td>{{ administrativo[2] }}</td>
             <td>
-                <form action="/actualizar_profesor/{{ profesor[0] }}" method="post">
-                    <input type="text" name="estudios" value="{{ profesor[2] }}" required>
+                <form action="/actualizar_administrativo/{{ administrativo[0] }}" method="post">
+                    <input type="text" name="cargo" value="{{ administrativo[2] }}" required>
                     <button type="submit">Actualizar</button>
                 </form>
             </td>
