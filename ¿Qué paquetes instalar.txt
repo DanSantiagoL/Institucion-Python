@@ -12,3 +12,9 @@ Paquete para ejecutar en la web:
 
 pip install Flask
 
+Paquetes para requests:
+
+pip install requests
+pip install lxml
+
+
