@@ -1,20 +1,48 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from modelo import UsuarioModel
-from modelo import MateriaModel
-from modelo import CursoModel
-from modelo import ProfesorModel
-from modelo import EstudianteModel
-from modelo import AdministrativoModel
+from modelo import UsuarioModel, MateriaModel, CursoModel, ProfesorModel, EstudianteModel, AdministrativoModel
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from google.auth.transport.requests import Request
+import os
+import datetime
+
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Necesario para gestionar sesiones
 
+
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        correo = request.form['correo']
+        contrasena = request.form['contraseña']
+        usuario = UsuarioModel.verificar_usuario(correo, contrasena)
+        
+        if usuario:
+            session['usuario'] = usuario['usuCorreo']
+            return redirect(url_for('index'))
+        else:
+            flash('Correo o contraseña incorrectos', 'error')
+            return redirect(url_for('login'))
+    return render_template('login.html')
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.pop('usuario', None)
+    return redirect(url_for('login'))
+
 # Ruta para la página principal donde se muestran todos los usuarios
 @app.route('/index')
 def index():
-    
-    usuarios = UsuarioModel.obtener_usuarios()  # Obtiene los usuarios desde el modelo
-    return render_template('usuarios.html', usuarios=usuarios)  # Renderiza la plantilla con los usuarios
+    if 'usuario' not in session:
+        return redirect(url_for('login'))
+    usuarios = UsuarioModel.obtener_usuarios()
+    return render_template('usuarios.html', usuarios=usuarios)
 
 # Ruta para agregar un nuevo usuario
 @app.route('/agregar', methods=['POST'])
@@ -54,10 +82,43 @@ def eliminar_usuario(documento):
 # Ruta para la página principal donde se muestran todas las materias
 @app.route('/materias')
 def materias():
-    
+    if 'usuario' not in session:
+        return redirect(url_for('login'))    
     materias = MateriaModel.obtener_materias()  # Obtiene las materias desde el modelo
     profesores = MateriaModel.obtener_profesores()  # Obtiene los profesores
     return render_template('materias.html', materias=materias, profesores=profesores)  # Pasa ambas listas al HTML
+
+
+def get_google_calendar_service():
+    creds = None
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+    
+    service = build('calendar', 'v3', credentials=creds)
+    return service
+
+def agregar_evento_calendario(materia, fecha_inicio, fecha_fin):
+    service = get_google_calendar_service()
+
+    evento = {
+        'summary': materia,
+        'start': {'dateTime': fecha_inicio.isoformat(), 'timeZone': 'America/Bogota'},
+        'end': {'dateTime': fecha_fin.isoformat(), 'timeZone': 'America/Bogota'}
+    }
+
+    event = service.events().insert(calendarId='primary', body=evento).execute()
+    print(f'Evento creado: {event.get("htmlLink")}')
+
 
 # Ruta para agregar una nueva materia
 @app.route('/agregar_materia', methods=['POST'])
@@ -65,7 +126,11 @@ def agregar_materia():
     descripcion = request.form['descripcion']
     profesor = request.form['profesor']
     estado = request.form['estado']
+    fecha_inicio = datetime.datetime.now() # toca verificar inicio de las clases, en este se llamo como ejemplo la fecha actual
+    fecha_fin = fecha_inicio + datetime.timedelta(hours=2) 
+
     MateriaModel.crear_materia(descripcion, profesor, estado)  # Inserta la nueva materia en la BD
+    agregar_evento_calendario(descripcion, fecha_inicio, fecha_fin)#(descripcion, fecha_inicio, fecha_fin)
     return redirect(url_for('materias'))  # Redirige a la página principal
 
 # Ruta para actualizar una materia
