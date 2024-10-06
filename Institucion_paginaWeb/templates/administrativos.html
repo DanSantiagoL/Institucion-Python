@@ -6,11 +6,12 @@
     <title>Gestión de Profesores</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
+    <script src="/static/script.js"></script>
 
 </head>
 <body>
 
-    <h1>Profesores</h1>
+    <h1>Administrativos</h1>
 
     <div class="navbar">
         <ul>
@@ -24,11 +25,14 @@
         </ul>
     </div>
 
+     <!-- Campo de búsqueda -->
+     <input type="text" id="buscador" onkeyup="buscarAdministrativo()" placeholder="Buscar por Nombre o Cargo">
+     
     <!-- Tabla de administrativos -->
-    <table border="1">
+    <table border="1" id="tablaAdministrativos">
         <tr>
             <th>ID</th>
-            <th>Documento</th>
+            <th>Nombre</th>
             <th>Cargo</th>
             <th>Actualizar cargo</th>
         </tr>

@@ -60,6 +60,20 @@ class MateriaModel:
         materias = cursor.fetchall()
         conexion.close()
         return materias
+    
+    @staticmethod
+    def obtener_profesores():
+        conexion = obtener_conexion()
+        cursor = conexion.cursor()
+        sql = """
+        SELECT profesor.profId, usuario.usuNombre, usuario.usuApellido 
+        FROM profesor 
+        JOIN usuario ON profesor.usuDocumento_fk = usuario.usuDocumento
+        """
+        cursor.execute(sql)
+        profesores = cursor.fetchall()
+        conexion.close()
+        return profesores
 
     @staticmethod
     def actualizar_materia(idmateria, descripcion, profesor,estado):
@@ -99,6 +113,20 @@ class CursoModel:
         cursos = cursor.fetchall()
         conexion.close()
         return cursos
+    
+    @staticmethod
+    def obtener_profesores():
+        conexion = obtener_conexion()
+        cursor = conexion.cursor()
+        sql = """
+        SELECT profesor.profId, usuario.usuNombre, usuario.usuApellido 
+        FROM profesor 
+        JOIN usuario ON profesor.usuDocumento_fk = usuario.usuDocumento
+        """
+        cursor.execute(sql)
+        profesores = cursor.fetchall()
+        conexion.close()
+        return profesores
 
     @staticmethod
     def actualizar_curso(idcurso, descripcion,estado,profesor):
@@ -158,6 +186,15 @@ class EstudianteModel:
         cursor.execute(sql, (curso, idestudiante))
         conexion.commit()
         conexion.close()
+
+    @staticmethod
+    def obtener_cursos():
+        conexion = obtener_conexion()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT cursoId, cursoDescripcion FROM curso")
+        cursos = cursor.fetchall()
+        conexion.close()
+        return cursos
 #############################################################################################
 
 class AdministrativoModel:
@@ -166,7 +203,7 @@ class AdministrativoModel:
     def obtener_administrativo():
         conexion = obtener_conexion()
         cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM administrativo")
+        cursor.execute("SELECT * FROM vista_administrativos")
         administrativos = cursor.fetchall()
         conexion.close()
         return administrativos

@@ -6,6 +6,7 @@
     <title>Gestión de Profesores</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
+    <script src="/static/script.js"></script>
 
 </head>
 <body>
@@ -24,8 +25,11 @@
         </ul>
     </div>
 
+    <!-- Campo de búsqueda -->
+    <input type="text" id="buscador" onkeyup="buscarProfesor()" placeholder="Buscar por Profesor o Estudios">
+
     <!-- Tabla de profesores -->
-    <table border="1">
+    <table border="1" id="tablaProfesores">
         <tr>
             <th>ID</th>
             <th>Profesor</th>

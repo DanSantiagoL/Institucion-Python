@@ -6,6 +6,7 @@
     <title>Gestión de Cursos</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
+    <script src="/static/script.js"></script>
 
 </head>
 <body>
@@ -24,8 +25,11 @@
         </ul>
     </div>
 
+     <!-- Campo de búsqueda -->
+     <input type="text" id="buscador" onkeyup="buscarCurso()" placeholder="Buscar por curso o profesor">
+
     <!-- Tabla de cursos -->
-    <table border="1">
+    <table border="1" id="tablaCursos">
         <tr>
             <th>ID</th>
             <th>Curso</th>
@@ -47,7 +51,12 @@
                         <option value="Activo">Activo</option>
                         <option value="Inactivo">Inactivo</option>
                       </select>
-                    <input type="text" name="profesor" value="{{ curso[3] }}" required>
+                      <select name="profesor" required>
+                        <option value="">Seleccione un profesor:</option>
+                        {% for profesor in profesores %}
+                            <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option> <!-- profId como value y nombre+apellido como texto -->
+                        {% endfor %}
+                    </select>
                     <button type="submit">Actualizar</button>
                 </form>
                 <a href="/eliminar_curso/{{ curso[0]}}">Eliminar</a>
@@ -65,7 +74,12 @@
             <option value="Activo">Activo</option>
             <option value="Inactivo">Inactivo</option>
           </select>
-        <input type="text" name="profesor" placeholder="Profesor" required>
+          <select name="profesor" required>
+            <option value="">Seleccione un profesor:</option>
+            {% for profesor in profesores %}
+                <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option> <!-- profId como value y nombre+apellido como texto -->
+            {% endfor %}
+        </select>
         <button type="submit">Agregar</button>
     </form>
 </body>

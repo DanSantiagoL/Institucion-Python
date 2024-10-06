@@ -6,6 +6,7 @@
     <title>Gestión de Materias</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
+    <script src="/static/script.js"></script>
 
 </head>
 <body>
@@ -23,9 +24,10 @@
             <li><a href="administrativos">Tabla de administrativos</a></li>
         </ul>
     </div>
+    <input type="text" id="buscador" onkeyup="buscarMateria()" placeholder="Buscar por materia o profesor">
 
     <!-- Tabla de materias -->
-    <table border="1">
+    <table border="1" id="tablaMaterias">
         <tr>
             <th>ID</th>
             <th>Materia</th>
@@ -42,7 +44,12 @@
             <td>
                 <form action="/actualizar_materia/{{ materia[0] }}" method="post">
                     <input type="text" name="descripcion" value="{{ materia[1] }}" required>
-                    <input type="text" name="profesor" value="{{ materia[2] }}" required>
+                    <select name="profesor" required>
+                        <option value="">Seleccione un profesor:</option>
+                        {% for profesor in profesores %}
+                            <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option>  <!-- profId como value y nombre+apellido como texto -->
+                        {% endfor %}
+                    </select>
                     <select name="estado" value="{{ materia[3] }}" required>
                         <option value="{{ materia[3] }}">{{ materia[3] }}</option>
                         <option value="Activo">Activo</option>
@@ -60,7 +67,12 @@
     <h2>Agregar Materia</h2>
     <form action="/agregar_materia" method="post">
         <input type="text" name="descripcion" placeholder="Materia" required>
-        <input type="text" name="profesor" placeholder="Profesor" required>
+        <select name="profesor" required>
+            <option value="">Seleccione un profesor:</option>
+            {% for profesor in profesores %}
+                <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option>  <!-- profId como value y nombre+apellido como texto -->
+            {% endfor %}
+        </select>
         <select name="estado" required>
             <option value="">Seleccione un estado:</option>
             <option value="Activo">Activo</option>

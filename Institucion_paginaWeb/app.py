@@ -56,7 +56,8 @@ def eliminar_usuario(documento):
 def materias():
     
     materias = MateriaModel.obtener_materias()  # Obtiene las materias desde el modelo
-    return render_template('materias.html', materias=materias)  # Renderiza la plantilla con las materias
+    profesores = MateriaModel.obtener_profesores()  # Obtiene los profesores
+    return render_template('materias.html', materias=materias, profesores=profesores)  # Pasa ambas listas al HTML
 
 # Ruta para agregar una nueva materia
 @app.route('/agregar_materia', methods=['POST'])
@@ -64,7 +65,7 @@ def agregar_materia():
     descripcion = request.form['descripcion']
     profesor = request.form['profesor']
     estado = request.form['estado']
-    MateriaModel.crear_materia(descripcion, profesor,estado)  # Inserta la nueva materia en la BD
+    MateriaModel.crear_materia(descripcion, profesor, estado)  # Inserta la nueva materia en la BD
     return redirect(url_for('materias'))  # Redirige a la página principal
 
 # Ruta para actualizar una materia
@@ -88,7 +89,8 @@ def eliminar_materia(idmateria):
 def cursos():
     
     cursos = CursoModel.obtener_cursos()  # Obtiene los cursos desde el modelo
-    return render_template('cursos.html', cursos=cursos)  # Renderiza la plantilla con los cursos
+    profesores = CursoModel.obtener_profesores()  # Obtiene los profesores desde el modelo
+    return render_template('cursos.html', cursos=cursos, profesores=profesores)  # Pasa ambas listas al HTML
 
 # Ruta para agregar un nuevo curso
 @app.route('/agregar_curso', methods=['POST'])
@@ -135,7 +137,8 @@ def actualizar_profesor(idprofesor):
 def estudiantes():
     
     estudiantes = EstudianteModel.obtener_estudiante()  # Obtiene los estudiantes desde el modelo
-    return render_template('estudiantes.html', estudiantes=estudiantes)  # Renderiza la plantilla con los estudiantes
+    cursos = CursoModel.obtener_cursos()  # Obtiene los cursos desde el modelo
+    return render_template('estudiantes.html', estudiantes=estudiantes, cursos=cursos)  # Pasa ambas listas al HTML
 
 # Ruta para actualizar un estudiante
 @app.route('/actualizar_estudiante/<int:idestudiante>', methods=['POST'])

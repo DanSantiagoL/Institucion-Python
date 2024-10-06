@@ -6,7 +6,8 @@
     <title>Gestión de Usuarios</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
-
+    <script src="/static/script.js"></script>
+    
 </head>
 <body>
 
@@ -24,8 +25,13 @@
         </ul>
     </div>
 
+      <!-- Barra de búsqueda -->
+      <form onsubmit="return false;">
+        <input type="text" id="buscador" onkeyup="buscarUsuario()" placeholder="Buscar por nombre o documento" onkeydown="if(event.key === 'Enter'){buscarUsuario();}">
+    </form>
+
     <!-- Tabla de Usuarios -->
-    <table border="1">
+    <table border="1" id="tablaUsuarios">
         <tr>
             <th>Documento</th>
             <th>Correo</th>

@@ -6,6 +6,7 @@
     <title>Gestión de estudiantes</title>
     <link rel="stylesheet" href="/static/style.css">
     <link rel="shortcut icon" href="/static/Imagenes/Icono.png" />
+    <script src="/static/script.js"></script>
 
 </head>
 <body>
@@ -24,11 +25,14 @@
         </ul>
     </div>
 
+    <!-- Campo de búsqueda -->
+    <input type="text" id="buscador" onkeyup="buscarEstudiante()" placeholder="Buscar por Estudiante o Curso">
+
     <!-- Tabla de estudiantes -->
-    <table border="1">
+    <table border="1" id="tablaEstudiantes">
         <tr>
             <th>ID</th>
-            <th>Documento</th>
+            <th>Nombre</th>
             <th>Curso</th>
             <th>Actualizar curso</th>
         </tr>
@@ -39,7 +43,12 @@
             <td>{{ estudiante[2] }}</td>
             <td>
                 <form action="/actualizar_estudiante/{{ estudiante[0] }}" method="post">
-                    <input type="text" name="curso" value="{{ estudiante[2] }}" required>
+                    <select name="curso" required>
+                        <option value="">Seleccione un curso: </option>
+                        {% for curso in cursos %}
+                            <option value="{{ curso[0] }}" {% if curso[0] == estudiante[3] %}selected{% endif %}>{{ curso[1] }}</option>
+                        {% endfor %}
+                    </select>
                     <button type="submit">Actualizar</button>
                 </form>
             </td>
