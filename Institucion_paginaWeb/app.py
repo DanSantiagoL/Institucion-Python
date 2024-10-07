@@ -15,26 +15,26 @@ app.secret_key = 'clave_secreta'  # Necesario para gestionar sesiones
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        correo = request.form['correo']
-        contrasena = request.form['contraseña']
-        usuario = UsuarioModel.verificar_usuario(correo, contrasena)
-        
-        if usuario:
-            session['usuario'] = usuario['usuCorreo']
-            return redirect(url_for('index'))
+
+def login_google_auth():
+    creds = None
+
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+
+
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
         else:
-            flash('Correo o contraseña incorrectos', 'error')
-            return redirect(url_for('login'))
-    return render_template('login.html')
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0) 
 
 
-@app.route('/logout', methods=['GET', 'POST'])
-def logout():
-    session.pop('usuario', None)
-    return redirect(url_for('login'))
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+
+    return creds
 
 # Ruta para la página principal donde se muestran todos los usuarios
 @app.route('/index')
