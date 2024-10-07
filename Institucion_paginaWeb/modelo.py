@@ -2,13 +2,22 @@
 from config import obtener_conexion
 
 class UsuarioModel:
-
     @staticmethod
-    def crear_usuario(documento,correo,apellido,nombre,tipoDocumento,telefono,estado,rol):
+    def documento_existe(documento):
         conexion = obtener_conexion()
         cursor = conexion.cursor()
-        sql = "INSERT INTO usuario (usuDocumento,usuCorreo,usuApellido,usuNombre,usuTipoDocumento,usuTelefono,usuEstado,rolId_fk) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-        cursor.execute(sql, (documento,correo,apellido,nombre,tipoDocumento,telefono,estado,rol))
+        sql = "SELECT COUNT(*) FROM usuario WHERE usuDocumento = %s"
+        cursor.execute(sql, (documento,))
+        existe = cursor.fetchone()[0] > 0
+        conexion.close()
+        return existe
+
+    @staticmethod
+    def crear_usuario(documento, correo, apellido, nombre, tipoDocumento, telefono, estado, rol):
+        conexion = obtener_conexion()
+        cursor = conexion.cursor()
+        sql = "INSERT INTO usuario (usuDocumento, usuCorreo, usuApellido, usuNombre, usuTipoDocumento, usuTelefono, usuEstado, rolId_fk) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor.execute(sql, (documento, correo, apellido, nombre, tipoDocumento, telefono, estado, rol))
         conexion.commit()
         conexion.close()
 

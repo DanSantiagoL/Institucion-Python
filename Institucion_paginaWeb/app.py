@@ -19,7 +19,6 @@ def index():
 # Ruta para agregar un nuevo usuario
 @app.route('/agregar', methods=['POST'])
 def agregar_usuario():
-
     documento = request.form['documento']
     correo = request.form['correo']
     apellido = request.form['apellido']
@@ -28,7 +27,14 @@ def agregar_usuario():
     telefono = request.form['telefono']
     estado = request.form['estado']
     rol = request.form['rol']
-    UsuarioModel.crear_usuario(documento,correo,apellido,nombre,tipoDocumento,telefono,estado,rol)  # Inserta el nuevo usuario en la BD
+
+    if UsuarioModel.documento_existe(documento):
+        # Si el documento ya existe, redirigir de nuevo con un mensaje de error
+        error = "Ese documento ya está en uso."
+        usuarios = UsuarioModel.obtener_usuarios()  # Obtiene los usuarios para mostrar en la tabla
+        return render_template('usuarios.html', usuarios=usuarios, error=error)
+
+    UsuarioModel.crear_usuario(documento, correo, apellido, nombre, tipoDocumento, telefono, estado, rol)  # Inserta el nuevo usuario en la BD
     return redirect(url_for('index'))  # Redirige a la página principal
 
 # Ruta para actualizar un usuario

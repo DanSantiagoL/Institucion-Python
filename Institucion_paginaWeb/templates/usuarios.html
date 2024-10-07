@@ -88,30 +88,34 @@
     <!-- Formulario para agregar nuevo usuario -->
     <h2>Agregar Usuario</h2>
     <form action="/agregar" method="post">
-        <input type="text" name="documento" placeholder="Documento" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
-        <input type="email" name="correo" placeholder="Correo" required>
-        <input type="text" name="apellido" placeholder="Apellido" required>
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <select name="tipoDocumento" required >
-            <option value="">Tipo de documento:</option>
-            <option value="CC">CC</option>
-            <option value="CE">CE</option>
-            <option value="TI">TI</option>
-          </select>
-        <input type="text" name="telefono" placeholder="Telefono" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
-        <select name="estado" required >
-            <option value="">Seleccione un estado:</option>
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-          </select>
+      {% if error %}
+          <p style="color:red;">{{ error }}</p>
+      {% endif %}
+      <input type="text" name="documento" placeholder="Documento" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
+      <input type="email" name="correo" placeholder="Correo" required>
+      <input type="text" name="apellido" placeholder="Apellido" required>
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <select name="tipoDocumento" required>
+          <option value="">Tipo de documento:</option>
+          <option value="CC">CC</option>
+          <option value="CE">CE</option>
+          <option value="TI">TI</option>
+      </select>
+      <input type="text" name="telefono" placeholder="Telefono" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
+      <select name="estado" required>
+          <option value="">Seleccione un estado:</option>
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+      </select>
+      <select name="rol" required>
+          <option value="">Seleccione un rol:</option>
+          <option value="1">Administrador</option>
+          <option value="2">Profesor</option>
+          <option value="3">Estudiante</option>
+      </select>
+      <button type="submit">Agregar</button>
+  </form>
 
-          <select name="rol" required >
-            <option value="">Seleccione un rol:</option>
-            <option value="1">Administrador</option>
-            <option value="2">Profesor</option>
-            <option value="3">Estudiante</option>
-          </select>
-        <button type="submit">Agregar</button>
-    </form>
+  
 </body>
 </html>
