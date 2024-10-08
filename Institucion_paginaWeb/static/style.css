@@ -1,60 +1,142 @@
-
+/*Afectaciones generales*/
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-
+    margin: 0;
+    padding: 0%;
 }
-
-table {
-    width: 100%;
-    margin-bottom: 20px;
-    border-collapse: collapse;
+a{
+    text-decoration: none;
 }
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
 form {
     display: inline;
 }
-
-.navbar {
-    background-color: #f8f8f8; /* Color de fondo del recuadro */
-    padding: 10px; /* Espaciado interno */
-    border: 1px solid #ccc; /* Borde del recuadro */
+h1{
+    padding: 30px 0;
+    margin: 0% 15% 0 0;
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+header{
+    width: 100%;
+    background-color: #253c59; /* Color de fondo del recuadro */
+    color: white;
+}
+/*Logo*/
+.logo{
+    float: left;
+}
+/* Menu */
+.menu_principal{
     border-radius: 5px; /* Bordes redondeados */
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 50px;
+    padding: 20px 10% 0% 10%;
+    font-weight: bold;
     
 }
 
-.navbar ul {
-    list-style-type: none; /* Quitar los puntos de la lista */
-    margin: 0; /* Eliminar el margen */
-    padding: 0; /* Eliminar el padding */
-    display: flex; /* Hacer la lista horizontal */
-    justify-content: center;
-    
+.menu_principal a{
+    color:white;
+    font-size: 18px;
+    display: block;
 }
 
-.navbar li {
-    margin-right: 20px; /* Espacio entre los elementos de la lista */
-    
-
+.menu_principal a:hover{ 
+    color:#b4d8fd;
+}
+.Boton_menu{
+    text-align: center;
+    padding: 40px 20px;
+    width: 12%;
+}
+.menu_principal .Boton_menu:hover{
+    background-color:#3a5f8b;
+}
+/*Agregar*/
+.Agregar{
+    border: solid 5px #1c486db7;
+    border-radius: 25px;
+    margin: 10px 10%;
+    padding: 0 20px 10px 20px;
+}
+.Caja_texto{
+    margin: 10px 5%;
+    height: 40px;
+    width: 300px;
+    border: solid gray 2px;
+    padding: 0  10px;
+    border-radius: 25px;
+}
+.Botones{
+    margin: 0 8%;
+    width: 150px;
+    padding: 10px 0;
+    border: solid 3px #253c59;
+    background-color: #253c59;
+    color: white;
+    border-radius: 10px;
+}
+.Botones:hover{
+    background-color:#3a5f8b; 
+    color:#b4d8fd;
+    border-color:#3a5f8b; 
+}
+/*Consultas*/
+.Consultas{
+    border: solid 5px #1c486db7;
+    border-radius: 25px;
+    margin: 20px 10%;
+    padding: 0 20px 10px 20px;
+}
+.Buscador{
+   width: 300px; 
+   padding: 10px;
+   border-radius: 10px 10px 0px 0px;
+   border: solid grey 3px;
+   border-bottom: 0px;
+}
+.Tabla_con{
+    border: solid grey 3px;
+    border-collapse: collapse;
+}
+.Tabla_con th{
+    background-color:#253c59 ;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px;
+}
+.Tabla_con td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: solid grey 2px;
+}
+.Tabla_mod{
+    border: solid grey 2px;
+}
+.Caja_texto_mod{
+    width: 200px;
+    margin: 3px 5px;
+    height: 40px;
+    border: solid gray 2px;
+    padding: 0  10px;
+    border-radius: 5px;
+}
+.Botones_mod{
+    margin: 10px 8% 0 8%;
+    width: 150px;
+    padding: 10px 0;
+    border: solid 3px #253c59;
+    background-color: #253c59;
+    color: white;
+    border-radius: 10px;
 }
 
-.navbar a {
-    text-decoration: none; /* Sin subrayado */
-    color: #333; /* Color del texto */
-    padding: 5px 10px; /* Espaciado alrededor del texto */
-    transition: background-color 0.3s; /* Transición suave para el hover */
-}
-
-.navbar a:hover {
-    background-color: #ddd; /* Color de fondo al pasar el ratón */
-    border-radius: 3px; /* Bordes redondeados en hover */
+.Botones_mod:hover{
+    background-color:#3a5f8b;
+    color:#b4d8fd;
+    border-color: #3a5f8b;
 }
