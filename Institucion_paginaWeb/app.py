@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from modelo import UsuarioModel
-from modelo import MateriaModel
-from modelo import CursoModel
-from modelo import ProfesorModel
-from modelo import EstudianteModel
-from modelo import AdministrativoModel
+from google_calendar import _authenticate, crear_evento
+from modelo import UsuarioModel, MateriaModel, CursoModel, ProfesorModel, EstudianteModel, AdministrativoModel
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Necesario para gestionar sesiones

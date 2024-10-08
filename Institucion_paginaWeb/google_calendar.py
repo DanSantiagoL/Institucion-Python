@@ -52,4 +52,4 @@ class GoogleCalendar:
 
         # Llama a la API para crear el evento
         evento_creado = self.service.events().insert(calendarId='primary', body=evento).execute()
-        print(f'Evento creado: {evento_creado.get("htmlLink")}')
+   
