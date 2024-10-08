@@ -10,51 +10,50 @@
 
 </head>
 <body>
-
-    <h1>Estudiantes</h1>
-
-    <div class="navbar">
-        <ul>
-            
-            <li><a href="index">Tabla usuario</a></li>
-            <li><a href="materias">Tabla materias</a></li>
-            <li><a href="cursos">Tabla cursos</a></li>
-            <li><a href="profesores">Tabla de profesores</a></li>
-            <li><a href="estudiantes">Tabla de estudiantes</a></li>
-            <li><a href="administrativos">Tabla de administrativos</a></li>
-        </ul>
-    </div>
-
-    <!-- Campo de búsqueda -->
-    <input type="text" id="buscador" onkeyup="buscarEstudiante()" placeholder="Buscar por Estudiante o Curso">
-
-    <!-- Tabla de estudiantes -->
-    <table border="1" id="tablaEstudiantes">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Curso</th>
-            <th>Actualizar curso</th>
-        </tr>
-        {% for estudiante in estudiantes %}
-        <tr>
-            <td>{{ estudiante[0] }}</td>
-            <td>{{ estudiante[1] }}</td>
-            <td>{{ estudiante[2] }}</td>
-            <td>
-                <form action="/actualizar_estudiante/{{ estudiante[0] }}" method="post">
-                    <select name="curso" required>
-                        <option value="">Seleccione un curso: </option>
-                        {% for curso in cursos %}
-                            <option value="{{ curso[0] }}" {% if curso[0] == estudiante[3] %}selected{% endif %}>{{ curso[1] }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit">Actualizar</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
+    <header>
+        <img class="logo" src="/static/Imagenes/Logo_poli.png" alt="logo">
+        <h1>Modulo de Estudiantes</h1>
+    <!-- Menu principal -->
+        <nav class="menu_principal">
+            <div class="Boton_menu"><a href="index">Tabla usuario</a></div>
+            <div class="Boton_menu"><a href="materias">Tabla materias</a></div>
+            <div class="Boton_menu"><a href="cursos">Tabla cursos</a></div>
+            <div class="Boton_menu"><a href="profesores">Tabla de profesores</a></div>
+            <div class="Boton_menu"><a href="estudiantes">Tabla de estudiantes</a></div>
+            <div class="Boton_menu"><a href="administrativos">Tabla de administrativos</a></div>
+        </nav>
+    </header>
+    <fieldset class="Consultas">
+        <h2> Consulta de Estudiantes</h2> 
+        <!-- Campo de búsqueda -->
+        <input type="text" class="Buscador" style="margin: 0 15%;" id="buscador" onkeyup="buscarEstudiante()" placeholder="Buscar por Estudiante o Curso">
+        <!-- Tabla de estudiantes -->
+        <table class="Tabla_con" style="margin: 0 15%;" id="tablaEstudiantes">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Curso</th>
+                <th>Actualizar curso</th>
+            </tr>
+            {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante[0] }}</td>
+                <td>{{ estudiante[1] }}</td>
+                <td>{{ estudiante[2] }}</td>
+                <td class="Tabla_mod">
+                    <form action="/actualizar_estudiante/{{ estudiante[0] }}" method="post">
+                        <select class="Caja_texto_mod" style="width: 225px;" name="curso" required>
+                            <option value="">Seleccione un curso: </option>
+                            {% for curso in cursos %}
+                                <option value="{{ curso[0] }}" {% if curso[0] == estudiante[3] %}selected{% endif %}>{{ curso[1] }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="Botones_mod" type="submit">Actualizar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </fieldset>
 </body>
 </html>

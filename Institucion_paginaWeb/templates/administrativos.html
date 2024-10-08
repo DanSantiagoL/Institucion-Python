@@ -10,47 +10,45 @@
 
 </head>
 <body>
-
-    <h1>Administrativos</h1>
-
-    <div class="navbar">
-        <ul>
-            
-            <li><a href="index">Tabla usuario</a></li>
-            <li><a href="materias">Tabla materias</a></li>
-            <li><a href="cursos">Tabla cursos</a></li>
-            <li><a href="profesores">Tabla de profesores</a></li>
-            <li><a href="estudiantes">Tabla de estudiantes</a></li>
-            <li><a href="administrativos">Tabla de administrativos</a></li>
-        </ul>
-    </div>
-
-     <!-- Campo de búsqueda -->
-     <input type="text" id="buscador" onkeyup="buscarAdministrativo()" placeholder="Buscar por Nombre o Cargo">
-     
-    <!-- Tabla de administrativos -->
-    <table border="1" id="tablaAdministrativos">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Cargo</th>
-            <th>Actualizar cargo</th>
-        </tr>
-        {% for administrativo in administrativos %}
-        <tr>
-            <td>{{ administrativo[0] }}</td>
-            <td>{{ administrativo[1] }}</td>
-            <td>{{ administrativo[2] }}</td>
-            <td>
-                <form action="/actualizar_administrativo/{{ administrativo[0] }}" method="post">
-                    <input type="text" name="cargo" value="{{ administrativo[2] }}" required>
-                    <button type="submit">Actualizar</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-
+    <header>
+        <img class="logo" src="/static/Imagenes/Logo_poli.png" alt="logo">
+        <h1>Modulo de Administrativos</h1>
+    <!-- Menu principal -->
+        <nav class="menu_principal">
+            <div class="Boton_menu"><a href="index">Tabla usuario</a></div>
+            <div class="Boton_menu"><a href="materias">Tabla materias</a></div>
+            <div class="Boton_menu"><a href="cursos">Tabla cursos</a></div>
+            <div class="Boton_menu"><a href="profesores">Tabla de profesores</a></div>
+            <div class="Boton_menu"><a href="estudiantes">Tabla de estudiantes</a></div>
+            <div class="Boton_menu"><a href="administrativos">Tabla de administrativos</a></div>
+        </nav>
+    </header>
+    <fieldset class="Consultas">
+        <h2> Consulta de Administrativos</h2> 
+        <!-- Campo de búsqueda -->
+        <input type="text" class="Buscador" style="margin: 0 15%;" id="buscador" onkeyup="buscarAdministrativo()" placeholder="Buscar por Nombre o Cargo">
+        <!-- Tabla de administrativos -->
+        <table class="Tabla_con" style="margin: 0 15%;" id="tablaAdministrativos">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Actualizar cargo</th>
+            </tr>
+            {% for administrativo in administrativos %}
+            <tr>
+                <td>{{ administrativo[0] }}</td>
+                <td>{{ administrativo[1] }}</td>
+                <td>{{ administrativo[2] }}</td>
+                <td class="Tabla_mod">
+                    <form action="/actualizar_administrativo/{{ administrativo[0] }}" method="post">
+                        <input class="Caja_texto_mod" type="text" name="cargo" value="{{ administrativo[2] }}" required>
+                        <button class="Botones_mod" type="submit">Actualizar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </fieldset>
 </body>
 </html>

@@ -10,77 +10,80 @@
 
 </head>
 <body>
-
-    <h1>Cursos</h1>
-
-    <div class="navbar">
-        <ul>
-            
-            <li><a href="index">Tabla usuario</a></li>
-            <li><a href="materias">Tabla materias</a></li>
-            <li><a href="cursos">Tabla cursos</a></li>
-            <li><a href="profesores">Tabla de profesores</a></li>
-            <li><a href="estudiantes">Tabla de estudiantes</a></li>
-            <li><a href="administrativos">Tabla de administrativos</a></li>
-        </ul>
-    </div>
-
-     <!-- Campo de búsqueda -->
-     <input type="text" id="buscador" onkeyup="buscarCurso()" placeholder="Buscar por curso o profesor">
-
-    <!-- Tabla de cursos -->
-    <table border="1" id="tablaCursos">
-        <tr>
-            <th>ID</th>
-            <th>Curso</th>
-            <th>Estado</th>
-            <th>Profesor</th>
-            <th>Actualizar/Eliminar</th>
-        </tr>
-        {% for curso in cursos %}
-        <tr>
-            <td>{{ curso[0] }}</td>
-            <td>{{ curso[1] }}</td>
-            <td>{{ curso[2] }}</td>
-            <td>{{ curso[3] }}</td>
-            <td>
-                <form action="/actualizar_curso/{{ curso[0] }}" method="post">
-                    <input type="text" name="descripcion" value="{{ curso[1] }}" required>
-                    <select name="estado" value="{{ curso[2] }}" required>
-                        <option value="{{ curso[2] }}">{{ curso[2] }}</option>
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                      </select>
-                      <select name="profesor" required>
-                        <option value="">Seleccione un profesor:</option>
-                        {% for profesor in profesores %}
-                            <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option> <!-- profId como value y nombre+apellido como texto -->
-                        {% endfor %}
-                    </select>
-                    <button type="submit">Actualizar</button>
-                </form>
-                <a href="/eliminar_curso/{{ curso[0]}}">Eliminar</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <!-- Formulario para agregar nuevo curso -->
-    <h2>Agregar Curso</h2>
-    <form action="/agregar_curso" method="post">
-        <input type="text" name="descripcion" placeholder="Curso" required>
-        <select name="estado" required>
-            <option value="">Seleccione un estado:</option>
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-          </select>
-          <select name="profesor" required>
-            <option value="">Seleccione un profesor:</option>
-            {% for profesor in profesores %}
-                <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option> <!-- profId como value y nombre+apellido como texto -->
+    <header>
+        <img class="logo" src="/static/Imagenes/Logo_poli.png" alt="logo">
+        <h1>Modulo de Cursos</h1>
+    <!-- Menu principal -->
+        <nav class="menu_principal">
+            <div class="Boton_menu"><a href="index">Tabla usuario</a></div>
+            <div class="Boton_menu"><a href="materias">Tabla materias</a></div>
+            <div class="Boton_menu"><a href="cursos">Tabla cursos</a></div>
+            <div class="Boton_menu"><a href="profesores">Tabla de profesores</a></div>
+            <div class="Boton_menu"><a href="estudiantes">Tabla de estudiantes</a></div>
+            <div class="Boton_menu"><a href="administrativos">Tabla de administrativos</a></div>
+        </nav>
+    </header>
+    <fieldset class="Agregar">
+        <legend> <h2>Agregar Curso</h2></legend>
+        <!-- Formulario para agregar nuevo curso -->
+        <form action="/agregar_curso" method="post">
+            <input class="Caja_texto" type="text" name="descripcion" placeholder="Curso" required>
+            <select class="Caja_texto" name="estado" required>
+                <option value="">Seleccione un estado:</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+            <select class="Caja_texto" name="profesor" required>
+                <option value="">Seleccione un profesor:</option>
+                {% for profesor in profesores %}
+                    <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option> <!-- profId como value y nombre+apellido como texto -->
+                {% endfor %}
+            </select>
+            <br><br>
+            <button class="Botones" type="submit">Agregar</button>
+            <br><br>
+        </form>
+    </fieldset>
+    <fieldset class="Consultas">
+        <h2> Consulta de Cursos</h2> 
+        <!-- Campo de búsqueda -->
+        <input type="text" class="Buscador" id="buscador" onkeyup="buscarCurso()" placeholder="Buscar por curso o profesor">
+        <!-- Tabla de cursos -->
+        <table class="Tabla_con" id="tablaCursos">
+            <tr>
+                <th>ID</th>
+                <th>Curso</th>
+                <th>Estado</th>
+                <th>Profesor</th>
+                <th>Actualizar/Eliminar</th>
+            </tr>
+            {% for curso in cursos %}
+            <tr>
+                <td>{{ curso[0] }}</td>
+                <td>{{ curso[1] }}</td>
+                <td>{{ curso[2] }}</td>
+                <td>{{ curso[3] }}</td>
+                <td class="Tabla_mod">
+                    <form action="/actualizar_curso/{{ curso[0] }}" method="post">
+                        <input class="Caja_texto_mod" type="text" name="descripcion" value="{{ curso[1] }}" required>
+                        <select class="Caja_texto_mod" style="width: 225px;" name="estado" value="{{ curso[2] }}" required>
+                            <option value="{{ curso[2] }}">{{ curso[2] }}</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                        <select class="Caja_texto_mod" style="width: 225px;" name="profesor" required>
+                            <option value="">Seleccione un profesor:</option>
+                            {% for profesor in profesores %}
+                                <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option> <!-- profId como value y nombre+apellido como texto -->
+                            {% endfor %}
+                        </select>
+                        <button class="Botones_mod" type="submit">Actualizar</button>
+                    </form>
+                    <a class="Botones_mod" style="padding: 10px 40px;" href="/eliminar_curso/{{ curso[0]}}">Eliminar</a>
+                </td>
+            </tr>
             {% endfor %}
-        </select>
-        <button type="submit">Agregar</button>
-    </form>
+        </table>
+    </fieldset>
 </body>
 </html>

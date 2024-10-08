@@ -10,75 +10,81 @@
 
 </head>
 <body>
+    <header>
+        <img class="logo" src="/static/Imagenes/Logo_poli.png" alt="logo">
+        <h1>Modulo de Materias</h1>
+    <!-- Menu principal -->
+        <nav class="menu_principal">
+            <div class="Boton_menu"><a href="index">Tabla usuario</a></div>
+            <div class="Boton_menu"><a href="materias">Tabla materias</a></div>
+            <div class="Boton_menu"><a href="cursos">Tabla cursos</a></div>
+            <div class="Boton_menu"><a href="profesores">Tabla de profesores</a></div>
+            <div class="Boton_menu"><a href="estudiantes">Tabla de estudiantes</a></div>
+            <div class="Boton_menu"><a href="administrativos">Tabla de administrativos</a></div>
+        </nav>
+    </header>
+    <!-- Formulario para agregar nueva materia -->   
+    <fieldset class="Agregar">
+        <legend> <h2>Agregar Materia</h2></legend>
+        <form action="/agregar_materia" method="post">
+            <input class="Caja_texto" type="text" name="descripcion" placeholder="Materia" required>
+            <select class="Caja_texto" name="profesor" required>
+                <option value="">Seleccione un profesor:</option>
+                {% for profesor in profesores %}
+                    <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option>  <!-- profId como value y nombre+apellido como texto -->
+                {% endfor %}
+            </select>
+            <select class="Caja_texto" name="estado" required>
+                <option value="">Seleccione un estado:</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+            <br><br>
+            <button class="Botones" type="submit">Agregar</button>
+            <br><br>
+        </form>
+    </fieldset>
+    <fieldset class="Consultas">
+        <h2> Consulta de Materias</h2> 
+        <!-- Barra de búsqueda --> 
+        <input type="text" class="Buscador" id="buscador" onkeyup="buscarMateria()" placeholder="Buscar por materia o profesor">
+        <!-- Tabla de materias -->
+        <table class="Tabla_con" id="tablaMaterias">
+            <tr>
+                <th>ID</th>
+                <th>Materia</th>
+                <th>Profesor</th>
+                <th>Estado</th>
+                <th>Actualizar/Eliminar</th>
+            </tr>
+            {% for materia in materias %}
+            <tr>
+                <td>{{ materia[0] }}</td>
+                <td>{{ materia[1] }}</td>
+                <td>{{ materia[2] }}</td>
+                <td>{{ materia[3] }}</td>
+                <td class="Tabla_mod">
+                    <form action="/actualizar_materia/{{ materia[0] }}" method="post">
+                        <input class="Caja_texto_mod" type="text" name="descripcion" value="{{ materia[1] }}" required>
+                        <select class="Caja_texto_mod" style="width: 225px;" name="profesor" required>
+                            <option value="">Seleccione un profesor:</option>
+                            {% for profesor in profesores %}
+                                <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option>  <!-- profId como value y nombre+apellido como texto -->
+                            {% endfor %}
+                        </select>
+                        <select class="Caja_texto_mod" style="width: 225px;" name="estado" value="{{ materia[3] }}" required>
+                            <option value="{{ materia[3] }}">{{ materia[3] }}</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
 
-    <h1>Materias</h1>
-
-    <div class="navbar">
-        <ul>
-            
-            <li><a href="index">Tabla usuario</a></li>
-            <li><a href="materias">Tabla materias</a></li>
-            <li><a href="cursos">Tabla cursos</a></li>
-            <li><a href="profesores">Tabla de profesores</a></li>
-            <li><a href="estudiantes">Tabla de estudiantes</a></li>
-            <li><a href="administrativos">Tabla de administrativos</a></li>
-        </ul>
-    </div>
-    <input type="text" id="buscador" onkeyup="buscarMateria()" placeholder="Buscar por materia o profesor">
-
-    <!-- Tabla de materias -->
-    <table border="1" id="tablaMaterias">
-        <tr>
-            <th>ID</th>
-            <th>Materia</th>
-            <th>Profesor</th>
-            <th>Estado</th>
-            <th>Actualizar/Eliminar</th>
-        </tr>
-        {% for materia in materias %}
-        <tr>
-            <td>{{ materia[0] }}</td>
-            <td>{{ materia[1] }}</td>
-            <td>{{ materia[2] }}</td>
-            <td>{{ materia[3] }}</td>
-            <td>
-                <form action="/actualizar_materia/{{ materia[0] }}" method="post">
-                    <input type="text" name="descripcion" value="{{ materia[1] }}" required>
-                    <select name="profesor" required>
-                        <option value="">Seleccione un profesor:</option>
-                        {% for profesor in profesores %}
-                            <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option>  <!-- profId como value y nombre+apellido como texto -->
-                        {% endfor %}
-                    </select>
-                    <select name="estado" value="{{ materia[3] }}" required>
-                        <option value="{{ materia[3] }}">{{ materia[3] }}</option>
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                      </select>
-                    <button type="submit">Actualizar</button>
-                </form>
-                <a href="/eliminar_materia/{{ materia[0]}}">Eliminar</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <!-- Formulario para agregar nueva materia -->
-    <h2>Agregar Materia</h2>
-    <form action="/agregar_materia" method="post">
-        <input type="text" name="descripcion" placeholder="Materia" required>
-        <select name="profesor" required>
-            <option value="">Seleccione un profesor:</option>
-            {% for profesor in profesores %}
-                <option value="{{ profesor[0] }}">{{ profesor[1] }} {{ profesor[2] }}</option>  <!-- profId como value y nombre+apellido como texto -->
+                        <button class="Botones_mod" type="submit">Actualizar</button>
+                    </form>
+                    <a class="Botones_mod" style="padding: 10px 40px;" href="/eliminar_materia/{{ materia[0]}}">Eliminar</a>
+                </td>
+            </tr>
             {% endfor %}
-        </select>
-        <select name="estado" required>
-            <option value="">Seleccione un estado:</option>
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-          </select>
-        <button type="submit">Agregar</button>
-    </form>
+        </table>
+    </fieldset>
 </body>
 </html>

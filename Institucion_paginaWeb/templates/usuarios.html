@@ -10,112 +10,114 @@
     
 </head>
 <body>
-
-    <h1>Usuarios</h1>
-
-    <div class="navbar">
-        <ul>
-            
-            <li><a href="index">Tabla usuario</a></li>
-            <li><a href="materias">Tabla materias</a></li>
-            <li><a href="cursos">Tabla cursos</a></li>
-            <li><a href="profesores">Tabla de profesores</a></li>
-            <li><a href="estudiantes">Tabla de estudiantes</a></li>
-            <li><a href="administrativos">Tabla de administrativos</a></li>
-        </ul>
-    </div>
-
-      <!-- Barra de búsqueda -->
-      <form onsubmit="return false;">
-        <input type="text" id="buscador" onkeyup="buscarUsuario()" placeholder="Buscar por nombre o documento" onkeydown="if(event.key === 'Enter'){buscarUsuario();}">
-    </form>
-
-    <!-- Tabla de Usuarios -->
-    <table border="1" id="tablaUsuarios">
-        <tr>
-            <th>Documento</th>
-            <th>Correo</th>
-            <th>Apellido</th>
-            <th>Nombre</th>
-            <th>Tipo de Documento</th>
-            <th>Telefono</th>
-            <th>Estado</th>
-            <th>Rol</th>
-            <th>Actualizar/Eliminar</th>
-        </tr>
-        {% for usuario in usuarios %}
-        <tr>
-            <td>{{ usuario[0] }}</td>
-            <td>{{ usuario[1] }}</td>
-            <td>{{ usuario[2] }}</td>
-            <td>{{ usuario[3] }}</td>
-            <td>{{ usuario[4] }}</td>
-            <td>{{ usuario[5] }}</td>
-            <td>{{ usuario[6] }}</td>
-            <td>{{ usuario[7] }}</td>
-            <td>
-                <form action="/actualizar/{{ usuario[0] }}" method="post">
-                    <input type="text" name="documento" value="{{ usuario[0] }}" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
-                    <input type="email" name="correo" value="{{ usuario[1] }}" required>
-                    <input type="text" name="apellido" value="{{ usuario[2] }}" required>
-                    <input type="text" name="nombre" value="{{ usuario[3] }}" required>
-                    <select name="tipoDocumento" value="{{ usuario[4] }}" required>
-                        <option value="{{ usuario[4] }}">{{ usuario[4] }}</option>
-                        <option value="CC">CC</option>
-                        <option value="CE">CE</option>
-                        <option value="TI">TI</option>
-                      </select>
-                    <input type="text" name="telefono" value="{{ usuario[5] }}" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
-                    <select name="estado" value="{{ usuario[6]}}" required>
-                        <option value="{{ usuario[6] }}">{{ usuario[6] }}</option>
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                      </select>
-                    <select name="rol" value="{{ usuario[7] }}" required>
-                        <option value="">Seleccione un rol: </option>
-                        <option value="1">Administrador</option>
-                        <option value="2">Profesor</option>
-                        <option value="3">Estudiante</option>
-                      </select>
-                    <button type="submit">Actualizar</button>
-                </form>
-                <a href="/eliminar/{{ usuario[0]}}">Eliminar</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
+    <header>
+        <img class="logo" src="/static/Imagenes/Logo_poli.png" alt="logo">
+        <h1>Modulo de Usuarios</h1>
+    <!-- Menu principal -->
+        <nav class="menu_principal">
+            <div class="Boton_menu"><a href="index">Tabla usuario</a></div>
+            <div class="Boton_menu"><a href="materias">Tabla materias</a></div>
+            <div class="Boton_menu"><a href="cursos">Tabla cursos</a></div>
+            <div class="Boton_menu"><a href="profesores">Tabla de profesores</a></div>
+            <div class="Boton_menu"><a href="estudiantes">Tabla de estudiantes</a></div>
+            <div class="Boton_menu"><a href="administrativos">Tabla de administrativos</a></div>
+        </nav>
+    </header>
     <!-- Formulario para agregar nuevo usuario -->
-    <h2>Agregar Usuario</h2>
-    <form action="/agregar" method="post">
-      {% if error %}
-          <p style="color:red;">{{ error }}</p>
-      {% endif %}
-      <input type="text" name="documento" placeholder="Documento" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
-      <input type="email" name="correo" placeholder="Correo" required>
-      <input type="text" name="apellido" placeholder="Apellido" required>
-      <input type="text" name="nombre" placeholder="Nombre" required>
-      <select name="tipoDocumento" required>
-          <option value="">Tipo de documento:</option>
-          <option value="CC">CC</option>
-          <option value="CE">CE</option>
-          <option value="TI">TI</option>
-      </select>
-      <input type="text" name="telefono" placeholder="Telefono" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
-      <select name="estado" required>
-          <option value="">Seleccione un estado:</option>
-          <option value="Activo">Activo</option>
-          <option value="Inactivo">Inactivo</option>
-      </select>
-      <select name="rol" required>
-          <option value="">Seleccione un rol:</option>
-          <option value="1">Administrador</option>
-          <option value="2">Profesor</option>
-          <option value="3">Estudiante</option>
-      </select>
-      <button type="submit">Agregar</button>
-  </form>
-
-  
+    <fieldset class="Agregar">
+        <legend> <h2>Agregar Usuario</h2></legend>
+        <form action="/agregar" method="post">
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+                <select class="Caja_texto" style="width: 322px;" name="tipoDocumento" required>
+                    <option value="">Tipo de documento:</option>
+                    <option value="CC">CC</option>
+                    <option value="CE">CE</option>
+                    <option value="TI">TI</option>
+                </select>
+                <input class="Caja_texto" type="text" name="documento" placeholder="Documento" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
+                <input class="Caja_texto" type="text" name="nombre" placeholder="Nombre" required>
+                <input class="Caja_texto" type="text" name="apellido" placeholder="Apellido" required>
+                <input class="Caja_texto" type="email" name="correo" placeholder="Correo" required>
+                <input class="Caja_texto" type="text" name="telefono" placeholder="Telefono" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
+                <select class="Caja_texto" style="width: 322px;" name="estado" required>
+                    <option value="">Seleccione un estado:</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+                <select class="Caja_texto" style="width: 322px;" name="rol" required>
+                    <option value="">Seleccione un rol:</option>
+                    <option value="1">Administrador</option>
+                    <option value="2">Profesor</option>
+                    <option value="3">Estudiante</option>
+                </select>
+                <br><br>
+                <button class="Botones" type="submit">Agregar</button>
+                <br><br>
+        </form>
+    </fieldset>
+    <fieldset class="Consultas">
+       <h2> Consulta de Usuario</h2> 
+        <!-- Barra de búsqueda -->
+        <form  consubmit="return false;">
+            <input type="text" class="Buscador" id="buscador" onkeyup="buscarUsuario()" placeholder="Buscar por nombre o documento" onkeydown="if(event.key === 'Enter'){buscarUsuario();}">
+        </form>
+        <!-- Tabla de Usuarios -->
+        <table class="Tabla_con" id="tablaUsuarios">
+            <tr>
+                <th>Tipo de Documento</th>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Estado</th>
+                <th>Rol</th>
+                <th>Actualizar/Eliminar</th>
+            </tr>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario[4] }}</td>
+                <td>{{ usuario[0] }}</td>
+                <td>{{ usuario[3] }}</td>
+                <td>{{ usuario[2] }}</td>
+                <td>{{ usuario[1] }}</td>
+                <td>{{ usuario[5] }}</td>
+                <td>{{ usuario[6] }}</td>
+                <td>{{ usuario[7] }}</td>
+                <td class="Tabla_mod">
+                    <form action="/actualizar/{{ usuario[0] }}" method="post">
+                        <select name="tipoDocumento" class="Caja_texto_mod" style="width: 225px;" value="{{ usuario[4] }}" required>
+                            <option value="{{ usuario[4] }}">{{ usuario[4] }}</option>
+                            <option value="CC">CC</option>
+                            <option value="CE">CE</option>
+                            <option value="TI">TI</option>
+                        </select>
+                        <input class="Caja_texto_mod"  type="text" name="documento" value="{{ usuario[0] }}" pattern="\d{8}|\d{10}" maxlength="10" title="Debe ingresar un número de documento valido" required>
+                        <input class="Caja_texto_mod"  type="text" name="nombre" value="{{ usuario[3] }}" required>
+                        <input class="Caja_texto_mod"  type="text" name="apellido" value="{{ usuario[2] }}" required>
+                        <input class="Caja_texto_mod"  type="email" name="correo" value="{{ usuario[1] }}" required>
+                        <input type="text" class="Caja_texto_mod" name="telefono" value="{{ usuario[5] }}" minlength="10" maxlength="10" pattern="\d+" title="Debe ingresar solo números" required>
+                        <select name="estado" class="Caja_texto_mod" style="width: 225px;" value="{{ usuario[6]}}" required>
+                            <option value="{{ usuario[6] }}">{{ usuario[6] }}</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                        <select name="rol" class="Caja_texto_mod" style="width: 225px;" value="{{ usuario[7] }}" required>
+                            <option value="">Seleccione un rol: </option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Profesor</option>
+                            <option value="3">Estudiante</option>
+                        </select>
+                        <br>
+                        <button type="submit" class="Botones_mod" style="width: 150px;">Actualizar</button>
+                    </form>
+                    <a class="Botones_mod" style="padding: 10px 40px;" href="/eliminar/{{ usuario[0]}}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </fieldset> 
 </body>
 </html>
