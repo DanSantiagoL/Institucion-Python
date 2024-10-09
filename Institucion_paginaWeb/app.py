@@ -1,9 +1,57 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from google_calendar import _authenticate, crear_evento
-from modelo import UsuarioModel, MateriaModel, CursoModel, ProfesorModel, EstudianteModel, AdministrativoModel
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+from google_auth_oauthlib.flow import Flow
+from google.oauth2 import id_token
+from google.auth.transport import requests
+import os
+from modelo import UsuarioModel
+from modelo import MateriaModel
+from modelo import CursoModel
+from modelo import ProfesorModel
+from modelo import EstudianteModel
+from modelo import AdministrativoModel
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Necesario para gestionar sesiones
+
+flow = Flow.from_client_secrets_file(
+    'Institucion_paginaWeb/authenticator.json',
+    scopes=['openid', 'https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'],
+    redirect_uri='http://localhost:5000/index'
+)
+
+@app.route('/login')
+def login():
+    authorization_url, state = flow.authorization_url()
+    session['state'] = state  # Almacena el estado en la sesión
+    return redirect(authorization_url)
+
+# Ruta para el callback
+@app.route('/callback')
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if session['state'] != request.args['state']:
+        return "Estado inválido", 400
+
+    credentials = flow.credentials
+    request_session = requests.Request()
+
+    try:
+        id_info = id_token.verify_oauth2_token(
+            id_token=credentials.id_token,
+            request=request_session,
+            audience=os.getenv('GOOGLE_CLIENT_ID')
+        )
+        return jsonify(id_info)  # Retorna la información del usuario en formato JSON
+    except ValueError:
+        return "Token inválido", 400
+
+# Ruta para cerrar sesión
+@app.route('/logout')
+def logout():
+    session.clear()  # Limpia la sesión
+    return redirect(url_for('index'))
+
 
 # Ruta para la página principal donde se muestran todos los usuarios
 @app.route('/index')
